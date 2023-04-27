@@ -35,8 +35,6 @@ class WarehouseState(State[Action]):
     nos can_moves verticais o agente apenas pode andar para cima ou baixo se não estiver numa das bordas
     verticais e quiser-se mover para OutOfBounds e se não for um prateleira ou um produto. Pode mover se ao 
     lado for uma célula vazia
-    
-    em nenhum dos casos se pode mover para cima de um agente
     '''
 
     def can_move_up(self) -> bool:
