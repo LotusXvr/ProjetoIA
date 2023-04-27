@@ -18,7 +18,7 @@ from ga.genetic_operators.recombination2 import Recombination2
 from ga.genetic_operators.recombination_pmx import RecombinationPMX
 from ga.genetic_operators.mutation_insert import MutationInsert
 from ga.genetic_algorithm_thread import GeneticAlgorithmThread
-from warehouse.warehouse_agent_search import WarehouseAgentSearch, read_state_from_txt_file
+from warehouse.warehouse_agent_search import WarehouseAgentSearch
 from warehouse.warehouse_experiments_factory import WarehouseExperimentsFactory
 from warehouse.warehouse_problemforGA import WarehouseProblemGA
 from warehouse.warehouse_state import WarehouseState
@@ -266,7 +266,7 @@ class Window(tk.Tk):
     def problem_button_clicked(self):
         filename = fd.askopenfilename(initialdir='.')
         if filename:
-            matrix, num_rows, num_columns = read_state_from_txt_file(filename)
+            matrix, num_rows, num_columns = WarehouseAgentSearch.read_state_from_txt_file(filename)
             self.initial_state = WarehouseState(matrix, num_rows, num_columns)
             self.agent_search = WarehouseAgentSearch(WarehouseState(matrix, num_rows, num_columns))
             self.solution = None
