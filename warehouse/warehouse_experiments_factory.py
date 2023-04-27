@@ -11,7 +11,7 @@ from ga.genetic_operators.mutation_insert import MutationInsert
 from ga.genetic_algorithm import GeneticAlgorithm
 from experiments_statistics.statistic_best_in_run import StatisticBestInRun
 from experiments_statistics.statistic_best_average import StatisticBestAverage
-from warehouse.warehouse_agent_search import read_state_from_txt_file, WarehouseAgentSearch
+from warehouse.warehouse_agent_search import WarehouseAgentSearch
 from warehouse.warehouse_problemforGA import WarehouseProblemGA
 from warehouse.warehouse_state import WarehouseState
 
@@ -60,7 +60,7 @@ class WarehouseExperimentsFactory(ExperimentsFactory):
                 self.mutation_method = Mutation3(mutation_probability)
 
         # PROBLEM
-        matrix, num_rows, num_columns = read_state_from_txt_file(self.get_parameter_value("Problem_file"))
+        matrix, num_rows, num_columns = WarehouseAgentSearch.read_state_from_txt_file(self.get_parameter_value("Problem_file"))
 
         agent_search = WarehouseAgentSearch(WarehouseState(matrix, num_rows, num_columns))
         # TODO calculate pair distances
