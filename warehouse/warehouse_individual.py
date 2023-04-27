@@ -1,5 +1,6 @@
 from ga.individual_int_vector import IntVectorIndividual
 
+
 class WarehouseIndividual(IntVectorIndividual):
 
     def __init__(self, problem: "WarehouseProblem", num_genes: int):
