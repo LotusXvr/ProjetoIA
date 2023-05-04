@@ -7,6 +7,7 @@ from agentsearch.state import State
 from agentsearch.action import Action
 from warehouse.actions import *
 
+
 class WarehouseState(State[Action]):
 
     def __init__(self, matrix: ndarray, rows, columns):

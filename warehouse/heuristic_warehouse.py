@@ -1,3 +1,4 @@
+import constants
 from agentsearch.heuristic import Heuristic
 from warehouse.warehouse_problemforSearch import WarehouseProblemSearch
 from warehouse.warehouse_state import WarehouseState
@@ -15,9 +16,9 @@ class HeuristicWarehouse(Heuristic[WarehouseProblemSearch, WarehouseState]):
         h = 0
         for i in range(state.rows):
             for j in range(state.columns):
-                if state.matrix[i][j] != 0:
-                    h += abs(i - self._lines_goal_matrix[state.matrix[i][j]]) \
-                         + abs(j - self._cols_goal_matrix[state.matrix[i][j]])
+                if state.matrix[i][j] == constants.PRODUCT:
+                    # calculate distance from the product to the forklift
+                    h += abs(i - state.line_forklift) + abs(j - state.column_forklift)
         return h
 
     def __str__(self):
