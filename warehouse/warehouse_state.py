@@ -14,6 +14,7 @@ class WarehouseState(State[Action]):
         super().__init__()
         # TODO
 
+        self.products = 0
         self.rows = rows
         self.columns = columns
         self.matrix = np.full([self.rows, self.columns], fill_value=0, dtype=int)
@@ -27,6 +28,8 @@ class WarehouseState(State[Action]):
                 if self.matrix[i][j] == constants.EXIT:
                     self.line_exit = i
                     self.column_exit = j
+                if self.matrix[i][j] == constants.PRODUCT:
+                    self.products += 1
 
     '''
     nos can_moves horizontais o agente apenas pode andar para o lado se não estiver numa das bordas
@@ -39,30 +42,34 @@ class WarehouseState(State[Action]):
     '''
 
     def can_move_up(self) -> bool:
-        forklift_up = self.matrix[self.line_forklift - 1][self.column_forklift]
+
         if self.line_forklift > 0:
+            forklift_up = self.matrix[self.line_forklift - 1][self.column_forklift]
             if forklift_up != constants.SHELF and forklift_up != constants.PRODUCT:
                 return True
         return False
 
     def can_move_right(self) -> bool:
-        forklift_right = self.matrix[self.line_forklift][self.column_forklift + 1]
+
         if self.column_forklift < self.columns - 1:
-            if forklift_right != constants.SHELF:
+            forklift_right = self.matrix[self.line_forklift][self.column_forklift + 1]
+            if forklift_right != constants.SHELF and forklift_right != constants.PRODUCT:
                 return True
         return False
 
     def can_move_down(self) -> bool:
-        forklift_down = self.matrix[self.line_forklift + 1][self.column_forklift]
+
         if self.line_forklift < self.rows - 1:
+            forklift_down = self.matrix[self.line_forklift + 1][self.column_forklift]
             if forklift_down != constants.SHELF and forklift_down != constants.PRODUCT:
                 return True
         return False
 
     def can_move_left(self) -> bool:
-        forklift_left = self.matrix[self.line_forklift][self.column_forklift - 1]
+
         if self.column_forklift > 0:
-            if forklift_left != constants.SHELF:
+            forklift_left = self.matrix[self.line_forklift][self.column_forklift - 1]
+            if forklift_left != constants.SHELF and forklift_left != constants.PRODUCT:
                 return True
         return False
 
