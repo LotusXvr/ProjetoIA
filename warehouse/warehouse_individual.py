@@ -17,7 +17,7 @@ class WarehouseIndividual(IntVectorIndividual):
 
     def __str__(self):
         string = 'Fitness: ' + f'{self.fitness}' + '\n'
-        string += str (self.genome) + "\n\n"
+        string += str(self.genome) + "\n\n"
         # TODO
         return string
 

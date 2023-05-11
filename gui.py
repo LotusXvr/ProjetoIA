@@ -623,27 +623,21 @@ class SearchSolver(threading.Thread):
             cell1 = copy.copy(pair.cell1)
             goal = copy.copy(pair.cell2)
             state = copy.copy(self.agent.initial_environment)
-            # if cell1 is forklift
-            if cell1 in self.agent.forklifts:
-                state.line_forklift = cell1.line
-                state.column_forklift = cell1.column
-            else:
-                # ir à matriz à posição da cell1 verificar se a coluna à direita está vazia
-                # se estiver vazia cell1.column + 1
-                # se não estiver vazia cell1.column - 1
-                for i in range(state.rows):
-                    for j in range(state.columns):
-                        pos = state.matrix[i][j]
-                        if pos == cell1 and pos == constants.PRODUCT:
-                            if state.matrix[i][j+1] == constants.EMPTY:
-                                cell1.column += 1
-                            else:
-                                cell1.column -= 1
-                        if pos == goal and pos == constants.PRODUCT:
-                            if state.matrix[i][j+1] == constants.EMPTY:
-                                goal.column += 1
-                            else:
-                                goal.column -= 1
+
+            if cell1 not in self.agent.forklifts:
+                if state.matrix[cell1.line][cell1.column - 1] == constants.EMPTY and cell1.column != 0:
+                    cell1.column -= 1
+                else:
+                    cell1.column += 1
+
+            state.line_forklift = cell1.line
+            state.column_forklift = cell1.column
+
+            if self.agent.exit != goal:
+                if state.matrix[goal.line][goal.column - 1] == constants.EMPTY and goal.column != 0:
+                    goal.column -= 1
+                else:
+                    goal.column += 1
 
             problem = WarehouseProblemSearch(state, goal)
             solution = self.agent.solve_problem(problem)
