@@ -616,7 +616,6 @@ class SearchSolver(threading.Thread):
         self.agent.stop()
 
     def run(self):
-        # TODO calculate pairs distances
         # chekar se cell é produto. se for produto ve se espaço ao lado é vazio e considera essa a cela em causa
 
         for pair in self.agent.pairs:
