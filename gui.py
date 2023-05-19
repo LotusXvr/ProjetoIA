@@ -1,24 +1,24 @@
 import copy
+import queue
+import threading
 import tkinter as tk
-from tkinter import ttk
 from tkinter import filedialog as fd
 from tkinter import messagebox
+from tkinter import ttk
+
 import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-import queue
-import threading
-import math
 
 import constants
+from ga.genetic_algorithm_thread import GeneticAlgorithmThread
 from ga.genetic_operators.mutation2 import Mutation2
 from ga.genetic_operators.mutation3 import Mutation3
-from ga.genetic_operators.recombination3 import Recombination3
-from ga.selection_methods.tournament import Tournament
-from ga.genetic_operators.recombination2 import Recombination2
-from ga.genetic_operators.recombination_pmx import RecombinationPMX
 from ga.genetic_operators.mutation_insert import MutationInsert
-from ga.genetic_algorithm_thread import GeneticAlgorithmThread
+from ga.genetic_operators.recombination2 import Recombination2
+from ga.genetic_operators.recombination3 import Recombination3
+from ga.genetic_operators.recombination_pmx import RecombinationPMX
+from ga.selection_methods.tournament import Tournament
 from warehouse.warehouse_agent_search import WarehouseAgentSearch
 from warehouse.warehouse_experiments_factory import WarehouseExperimentsFactory
 from warehouse.warehouse_problemforGA import WarehouseProblemGA
@@ -319,7 +319,7 @@ class Window(tk.Tk):
             Recombination2(float(self.entry_recombination_prob.get())) if recombination_methods_index == 1 else \
                 Recombination3(float(self.entry_recombination_prob.get()))
 
-        mutation_methods_index = self.combo_recombination_methods.current()
+        mutation_methods_index = self.combo_mutation_methods.current()
         mutation_method = MutationInsert(
             float(self.entry_mutation_prob.get())) if mutation_methods_index == 0 else \
             Mutation2(float(self.entry_mutation_prob.get())) if mutation_methods_index == 1 else \
