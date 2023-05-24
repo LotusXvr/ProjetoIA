@@ -5,14 +5,27 @@ class WarehouseIndividual(IntVectorIndividual):
 
     def __init__(self, problem: "WarehouseProblem", num_genes: int):
         super().__init__(problem, num_genes)
+        self.products = None
+
         # TODO
 
     def compute_fitness(self) -> float:
         # TODO
-        return 0
+        # Fitness será calculado baseado na quantidade de produtos que o agente apanhou. Quantos mais, melhor
+        for i in range(self.num_genes):
+            if self.genome[i]:  # == True
+                self.products += self.problem.warehouse_items[i].products
+        match self.problem.fitness_type:
+            case self.problem.SIMPLE_FITNESS:
+                self.fitness = self.products
+            case self.problem.PENALTY_FITNESS:
+                penalty = 0
+                # TODO
+                self.fitness = self.products - penalty
+        return self.fitness
 
     def obtain_all_path(self):
-        # TODO
+        # TODO o que fazer aqui?
         pass
 
     def __str__(self):
