@@ -13,6 +13,10 @@ class IntVectorIndividual(Individual):
         # TODO
         # preencher com a quantidade de produtos + agentes e shuffle
         self.genome = np.full(num_genes, False, dtype=int)
+        self.genome[:num_genes] = np.arange(1, num_genes+1)
+        np.random.shuffle(self.genome)
+        print("Genoma -> " + str(self.genome))
+
 
     def swap_genes(self, other, index: int):
         aux = self.genome[index]

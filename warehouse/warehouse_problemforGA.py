@@ -8,17 +8,14 @@ class WarehouseProblemGA(Problem):
     PENALTY_FITNESS = 1
 
     def __init__(self, agent_search: WarehouseAgentSearch):
-        # TODO
+        super().__init__()  # Chama o método __init__ da superclasse Problem
         self.forklifts = agent_search.forklifts
         self.products = agent_search.products
         self.agent_search = agent_search
-        # self.prob1s = prob1s -> necessita de parametro ?
         self.fitness_type = self.SIMPLE_FITNESS
 
     def generate_individual(self) -> "WarehouseIndividual":
-        # TODO
         new_individual = WarehouseIndividual(self, len(self.products) + len(self.forklifts) - 1)
-        new_individual.initialize(self.prob1s)
         return new_individual
 
     def __str__(self):
