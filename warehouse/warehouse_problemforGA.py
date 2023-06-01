@@ -17,8 +17,7 @@ class WarehouseProblemGA(Problem):
 
     def generate_individual(self) -> "WarehouseIndividual":
         # TODO
-        #                                                   VVVVVVVV
-        new_individual = WarehouseIndividual(self, len(self.products))
+        new_individual = WarehouseIndividual(self, len(self.products) + len(self.forklifts) - 1)
         new_individual.initialize(self.prob1s)
         return new_individual
 

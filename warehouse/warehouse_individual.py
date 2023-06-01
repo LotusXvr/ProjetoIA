@@ -12,6 +12,10 @@ class WarehouseIndividual(IntVectorIndividual):
     def compute_fitness(self) -> float:
         # TODO
         # Fitness será calculado baseado na quantidade de produtos que o agente apanhou. Quantos mais, melhor
+        # ir ao genoma ver a distancia do forklift ao primeiro produto do genoma self.problem.products[]
+        # depois ver p_value de cada par de celula 1 a celula 2 e separar o maior numero com os forklifts
+        # percorrer sempre o genoma e acrescentar +1 ao forklift
+
         for i in range(self.num_genes):
             if self.genome[i]:  # == True
                 self.products += self.problem.warehouse_items[i].products
@@ -24,6 +28,7 @@ class WarehouseIndividual(IntVectorIndividual):
                 self.fitness = self.products - penalty
         return self.fitness
 
+    # este serve para meter o boneco a funcionar. ultima coisa a ser feita
     def obtain_all_path(self):
         # TODO o que fazer aqui?
         pass
