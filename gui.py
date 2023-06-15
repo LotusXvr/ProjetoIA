@@ -641,6 +641,7 @@ class SearchSolver(threading.Thread):
             problem = WarehouseProblemSearch(state, goal)
             solution = self.agent.solve_problem(problem)
             pair.value = solution.cost
+            pair.cells = solution.path
 
         self.gui.text_problem.delete("1.0", "end")
         self.gui.text_problem.insert(tk.END, str(self.agent))
