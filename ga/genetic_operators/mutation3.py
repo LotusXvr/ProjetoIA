@@ -9,10 +9,23 @@ class Mutation3(Mutation):
 
     def mutate(self, ind: IntVectorIndividual) -> None:
         # TODO
-        for gene in ind:
-            if GeneticAlgorithm.rand.random() < self.probability:
-                gene = GeneticAlgorithm.rand.randint(0, 1)  # 1 é o gene range
-            ind.genome = gene
+        num_genes = len(ind.genome)
+        cut1 = GeneticAlgorithm.rand.randint(0, num_genes - 1)
+        cut2 = cut1
+        while cut1 == cut2:
+            cut2 = GeneticAlgorithm.rand.randint(0, num_genes - 1)
+
+        if cut1 > cut2:
+            cut1, cut2 = cut2, cut1
+
+        mid = int(cut1 + ((cut2 + 1) - cut1) / 2)
+        end_count = cut2
+
+        for i in range(cut1, mid):
+            aux = ind.genome[i]
+            ind.genome[i] = ind.genome[end_count]
+            ind.genome[end_count] = aux
+            end_count -= 1
 
     def __str__(self):
         return "Mutation 3 (" + f'{self.probability}' + ")"

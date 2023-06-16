@@ -26,28 +26,26 @@ class WarehouseIndividual(IntVectorIndividual):
 
         # Calcula a distância percorrida por cada forklift
         for i in range(len(self.forklifts)):
-            path.append([self.forklifts[i]])
+            path.append([self.forklifts[i]]) # adicionar o forklift ao path
 
             while k < len(self.genome):
                 gene = self.genome[k]
 
-                if gene <= len(self.products):
-                    # Atualiza a distância entre dois produtos consecutivos no genoma
-                    prev_gene = gene - 1
-                    path[i].append(self.products[prev_gene])
+                if gene <= len(self.products): # se o gene for menor ou igual ao numero de produtos
+                    prev_gene = gene - 1 # gene anterior
+                    path[i].append(self.products[prev_gene]) # adicionar o produto ao path
                     k += 1
                 else:
-                    k += 1
+                    k += 1 # se o gene for maior que o numero de produtos, passa para o proximo gene
                     break
 
-            path[i].append(self.problem.agent_search.exit)
+            path[i].append(self.problem.agent_search.exit) # adicionar a saida ao path
 
         # CALCULAR A FITNESS
         fitness = 0
-        for i in range(len(path)):
-            # impede que ocorra out of bounds
-            for j in range(len(path[i]) - 1):
-                fitness += self.get_pair_distance(path[i][j], path[i][j + 1])
+        for i in range(len(path)): # percorre os forklifts
+            for j in range(len(path[i]) - 1): # percorre as celulas
+                fitness += self.get_pair_distance(path[i][j], path[i][j + 1]) # soma a distancia entre as celulas
 
         self.path = path
         self.fitness = fitness
@@ -65,16 +63,15 @@ class WarehouseIndividual(IntVectorIndividual):
         cell_path = []
         max_steps = 0
         # percorrer o path e ir buscar os forklifts
-        for i in range(len(self.forklifts)): # percorre os forklifts
+        for i in range(len(self.forklifts)):
             cell_path.append([])
             for j in range(len(self.path[i]) - 1): # percorre as celulas
                 # descobrir a celula que o forklift vai percorrer
-                cell_path[i].extend(self.get_pair_cells(self.path[i][j], self.path[i][j + 1]))
+                cell_path[i].extend(self.get_pair_cells(self.path[i][j], self.path[i][j + 1])) # adicionar as celulas ao path
                 # impedir que o forklift fique parado no mesmo sitio (na mesma celula),
-                # sendo que não a celula inicial não pode ser igual à celula final do percurso anterior
-                if j < len(self.path[i]) - 1: # se não for a ultima celula
-                    if self.path[i]: # se a lista não estiver vazia
-                        cell_path[i].pop(-1) # remover a ultima celula do percurso anterior
+                # sendo que a celula inicial não pode ser igual à celula final do percurso anterior
+                if j < len(self.path[i]) - 2: # se não for a ultima celula
+                    cell_path[i].pop(-1) # remover a ultima celula do percurso
 
             # descobrir o numero de passos que o forklift vai dar
             if len(cell_path[i]) > max_steps:

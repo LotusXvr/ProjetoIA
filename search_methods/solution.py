@@ -11,14 +11,12 @@ class Solution:
         self.actions = []
         node = self.goal_node
         self.path = []
-        self.path.append(Cell(problem.initial_state.line_forklift, problem.initial_state.column_forklift))
+        self.path.append(Cell(problem.initial_state.line_forklift, problem.initial_state.column_forklift)) #adiciona a posição inicial do forklift
 
         while node.parent is not None:
             self.actions.insert(0, node.state.action)
-            self.path.insert(1, Cell(node.state.line_forklift, node.state.column_forklift))
+            self.path.insert(1, Cell(node.state.line_forklift, node.state.column_forklift)) #adiciona a posição do forklift
             node = node.parent
-
-
 
     @property
     def cost(self) -> int:
